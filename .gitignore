@@ -1,0 +1,9 @@
+# Build output
+build/
+dist/
+
+# IDE files
+*.class
+*.jar
+*.war
+*.ear
