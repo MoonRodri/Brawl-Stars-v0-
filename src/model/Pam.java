@@ -31,7 +31,8 @@ public class Pam extends Brawler {
     int gems = 0;
     int direction;
 
-    private static final double TOTAL_HEALTH = 9030.0;
+    private static final double BASE_TOTAL_HEALTH = 9030.0;
+    private double totalHealth;
     
     public Pam() {
         x = Window.width() / 2;
@@ -40,7 +41,8 @@ public class Pam extends Brawler {
         speed = 5;
         color = "green";
         cooldown = 9;
-        health = (int)TOTAL_HEALTH;
+        totalHealth = BASE_TOTAL_HEALTH;
+        health = (int)totalHealth;
     }
 
     /**
@@ -172,8 +174,8 @@ public class Pam extends Brawler {
     /**
      * @return the totalhealth
      */
-    public static double getTotalhealth() {
-        return TOTAL_HEALTH;
+    public double getTotalhealth() {
+        return totalHealth;
     }
 
     /**
@@ -290,10 +292,7 @@ public class Pam extends Brawler {
                 Window.out.color("green");
             }
             
-            if (health < TOTAL_HEALTH) {
-                
-            }
-            double fraction = health / TOTAL_HEALTH;
+            double fraction = health / totalHealth;
             double propHealth = fraction * 50.0;
             int intHealth = (int) propHealth;
             Window.out.rectangle(x + 40, y - 15, intHealth, 10);
@@ -452,16 +451,25 @@ public class Pam extends Brawler {
     }
 
     public void increaseHealth() {
-        health = (int) Math.min(TOTAL_HEALTH, health + 300);
+        health = (int) Math.min(totalHealth, health + 300);
 
     }
 
     public void healFromStation(PamSuper s) {
         if ((Math.abs(x - s.x) < 50) && (Math.abs(y - s.y) < 50)) {
-            if (health < TOTAL_HEALTH) {
+            if (health < totalHealth) {
                 health += 500;
             }
         }
+    }
+
+    /**
+     * Increases Pam's health and total health by 500 when consuming a power cube.
+     * This makes the new total health the maximum for the rest of the game.
+     */
+    public void consumePowerCube() {
+        totalHealth += 500;
+        health += 500;
     }
 
     public void setHealth(int x) {

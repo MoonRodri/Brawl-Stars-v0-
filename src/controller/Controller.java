@@ -618,6 +618,7 @@ public class Controller {
                 } else if (gems.get(gemscount).checkCollision(pam)) {
                     pam.setGems(pam.getGems() + 1);
                     pam.setDamage((int) (pam.getDamage() * 1.1));
+                    pam.consumePowerCube();
                     gems.remove(gemscount);
                 } else {
                     gemscount++;
